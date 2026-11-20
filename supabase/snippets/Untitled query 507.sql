@@ -1,1 +1,1 @@
-grant execute on function public.check_signup(text, text) to anon, authenticated;
+insert into invite_codes (code, kind) values ('dev-master-code', 'master');
