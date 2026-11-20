@@ -23,7 +23,33 @@ export type Database = {
           }
         },"public": {
           Tables: {
-            "profiles": {
+            "invite_codes": {
+                  Row: {
+                    "code": string,"created_at": string,"created_by": string | null,"id": string,"kind": string,"revoked": boolean,"updated_at": string,"used_at": string | null,"used_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "code": string,"created_at"?: string,"created_by"?: string | null,"id"?: string,"kind": string,"revoked"?: boolean,"updated_at"?: string,"used_at"?: string | null,"used_by"?: string | null
+                  }
+                  Update: {
+                    "code"?: string,"created_at"?: string,"created_by"?: string | null,"id"?: string,"kind"?: string,"revoked"?: boolean,"updated_at"?: string,"used_at"?: string | null,"used_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "invite_codes_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "invite_codes_used_by_fkey"
+      columns: ["used_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"profiles": {
                   Row: {
                     "created_at": string,"id": string,"roles": (string)[],"updated_at": string,"username": string
                   }
@@ -43,7 +69,24 @@ export type Database = {
             [_ in never]: never
           }
           Functions: {
-            [_ in never]: never
+            "check_signup":
+{ Args: { "code": string,"username": string }; Returns: string
+                           },
+"create_invite_codes":
+{ Args: { "count": number }; Returns: string[]
+                           },
+"has_role":
+{ Args: { "role": string }; Returns: boolean
+                           },
+"revoke_invite_code":
+{ Args: { "code": string }; Returns: undefined
+                           },
+"set_master_code":
+{ Args: { "new_code": string }; Returns: undefined
+                           },
+"set_user_roles":
+{ Args: { "roles": (string)[],"user_id": string }; Returns: (string)[]
+                           }
           }
           Enums: {
             [_ in never]: never

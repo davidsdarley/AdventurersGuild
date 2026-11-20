@@ -1,1 +1,1 @@
-select * from profiles;
+insert into invite_codes (code, kind) values ('WelcomeToTheGuild', 'master');
