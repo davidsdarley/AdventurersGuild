@@ -27,13 +27,14 @@ Layout:
 - Start local Supabase: npx supabase start
 - Rebuild local database (runs all migrations and seeds): npx supabase db reset
 - RLS tests: npx supabase test db
+- Every migration that creates a table also grants access explicitly: select (and insert, update, delete where the policies allow them) to anon and authenticated, and all to service_role. Without grants, queries fail with "permission denied" on the hosted project.
 - Regenerate database types: npx supabase gen types typescript --local > src/types/database.ts
 
 ## Conventions
 - Use named exports, not default exports
 - Do not use the `any` type; TypeScript runs in strict mode
 - React function components and hooks only
-- Style with Tailwind classes; do not add CSS files
+- Style with Tailwind classes. Custom CSS goes only in src/index.css, and only when Tailwind can't do it; say why in a comment.
 - Components never call Supabase directly; they go through src/data/
 - src/rules/ must stay pure: no React, Supabase, or browser APIs, so it can be unit-tested on its own
 - Every rules function has unit tests, covering both rulesets wherever they differ
@@ -45,11 +46,10 @@ Layout:
 ## Off-limits
 - Do not edit a migration that already exists; write a new one instead
 - Do not edit src/types/database.ts by hand (it is generated)
-- Do not run commands against the hosted Supabase project (for example npx supabase db push or npx supabase link); work only against the local database
+- Do not run commands against the hosted Supabase project (any command with --remote, such as npx supabase db push --remote, or npx supabase link); work only against the local database
 - Do not commit .env files, keys, or passwords
 - Do not build anything listed under "Out of scope" in docs/SPEC.md
 - Do not add npm dependencies without asking
-- Do not include D&D Beyond or other non-SRD rules content
 
 ## AI attribution
 After each task that changes files, append an entry to
