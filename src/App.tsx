@@ -1,12 +1,12 @@
-import './index.css'
+import { useEffect, useState } from 'react'
+import { checkConnection } from './data/health'
 
-function App() {
+export function App() {
+  const [status, setStatus] = useState('Checking...')
 
-  return (
-    <>
-      <h1 className="text-3xl font-bold text-red-600">Guild</h1>
-    </>
-  )
+  useEffect(() => {
+    checkConnection().then(setStatus)
+  }, [])
+
+  return <h1 className="p-8 text-2xl font-bold">{status}</h1>
 }
-
-export default App
