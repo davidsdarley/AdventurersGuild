@@ -1,1 +1,1 @@
-insert into invite_codes (code, kind) values ('WelcomeToTheGuild', 'master');
+grant execute on function public.check_signup(text, text) to anon, authenticated;

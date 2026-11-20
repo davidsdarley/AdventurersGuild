@@ -17,3 +17,8 @@
 - Tool: Claude Code (Claude Opus 5.5)
 - Task: Build the Register, Login, Forgot password and Reset password pages: invite-code registration using check_signup then signUp, login with a generic error and return-to-page redirect, and password reset by email, with unit tests for Register errors and the post-login redirect.
 - Review: TODO
+
+## 2026-11-20: supabase/config.toml, AI-ATTRIBUTION.md
+- Tool: Claude Code (Claude Opus 5.5)
+- Task: Fix the seed path in the local Supabase config so db reset loads supabase/seed/*.sql (including the dev master code), then reset the local database.
+- Review: TODO
