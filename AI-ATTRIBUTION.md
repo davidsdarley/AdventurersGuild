@@ -12,3 +12,8 @@
 - Tool: Claude Code (Claude Opus 5.5)
 - Task: Turn on TypeScript strict mode explicitly in the app and node tsconfigs.
 - Review: TODO
+
+## 2026-11-20: src/data/auth.ts, src/App.tsx, src/components/AuthForm.tsx (new file), src/pages/Login/LoginPage.tsx, src/pages/Login/login.ts (new file), src/pages/Login/login.test.ts (new file), src/pages/Register/RegisterPage.tsx, src/pages/Register/register.ts (new file), src/pages/Register/register.test.ts (new file), src/pages/ForgotPassword/ForgotPasswordPage.tsx (new file), src/pages/ResetPassword/ResetPasswordPage.tsx, supabase/config.toml, AI-ATTRIBUTION.md
+- Tool: Claude Code (Claude Opus 5.5)
+- Task: Build the Register, Login, Forgot password and Reset password pages: invite-code registration using check_signup then signUp, login with a generic error and return-to-page redirect, and password reset by email, with unit tests for Register errors and the post-login redirect.
+- Review: TODO

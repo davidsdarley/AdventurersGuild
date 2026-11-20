@@ -7,6 +7,7 @@ import { SessionProvider } from './data/auth'
 import { AdminPage } from './pages/Admin/AdminPage'
 import { CharactersPage } from './pages/Characters/CharactersPage'
 import { CompendiumPage } from './pages/Compendium/CompendiumPage'
+import { ForgotPasswordPage } from './pages/ForgotPassword/ForgotPasswordPage'
 import { LoginPage } from './pages/Login/LoginPage'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { NpcsPage } from './pages/Npcs/NpcsPage'
@@ -23,6 +24,7 @@ export function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           <Route element={<RequireAuth />}>

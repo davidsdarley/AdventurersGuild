@@ -88,3 +88,67 @@ export async function signOut(): Promise<void> {
   const { error } = await supabase.auth.signOut()
   if (error) throw new Error(error.message)
 }
+
+// Result of the Register form's pre-check (the check_signup database function).
+export type SignupCheck = 'ok' | 'invalid_code' | 'username_taken'
+
+// Checks the invite code, then the username. Reserves nothing: the auth.users
+// trigger makes the final decision when the account is created.
+export async function checkSignup(username: string, code: string): Promise<SignupCheck> {
+  const { data, error } = await supabase.rpc('check_signup', { username, code })
+  if (error) throw new Error(error.message)
+  if (data === 'ok' || data === 'invalid_code' || data === 'username_taken') return data
+  throw new Error(`Unexpected check_signup result: ${String(data)}`)
+}
+
+export interface SignUpInput {
+  username: string
+  email: string
+  password: string
+  inviteCode: string
+}
+
+export type SignUpResult =
+  | { ok: true }
+  | { ok: false; reason: 'email_taken' | 'weak_password' | 'failed' }
+
+// Creates the account. The trigger on auth.users reads username and
+// invite_code from the user metadata; if it rejects them, Supabase reports a
+// generic database error, which comes back here as 'failed'.
+export async function signUp(input: SignUpInput): Promise<SignUpResult> {
+  const { error } = await supabase.auth.signUp({
+    email: input.email,
+    password: input.password,
+    options: { data: { username: input.username, invite_code: input.inviteCode } },
+  })
+  if (!error) return { ok: true }
+  if (error.code === 'user_already_exists' || error.code === 'email_exists') {
+    return { ok: false, reason: 'email_taken' }
+  }
+  if (error.code === 'weak_password') return { ok: false, reason: 'weak_password' }
+  return { ok: false, reason: 'failed' }
+}
+
+// Returns false on any failure, so callers cannot tell a wrong email from a
+// wrong password.
+export async function signIn(email: string, password: string): Promise<boolean> {
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  return !error
+}
+
+export const RESET_PASSWORD_PATH = '/reset-password'
+
+// Sends a Supabase password reset email whose link opens /reset-password.
+// The redirect URL must be in the Auth allow-list (additional_redirect_urls).
+export async function requestPasswordReset(email: string): Promise<void> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}${RESET_PASSWORD_PATH}`,
+  })
+  if (error) throw new Error(error.message)
+}
+
+// Sets a new password for the signed-in user (the reset link signs them in).
+export async function updatePassword(password: string): Promise<void> {
+  const { error } = await supabase.auth.updateUser({ password })
+  if (error) throw new Error(error.message)
+}
