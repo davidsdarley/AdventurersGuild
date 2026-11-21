@@ -22,3 +22,8 @@
 - Tool: Claude Code (Claude Opus 5.5)
 - Task: Fix the seed path in the local Supabase config so db reset loads supabase/seed/*.sql (including the dev master code), then reset the local database.
 - Review: TODO
+
+## 2026-11-20: src/data/admin.ts (new file), src/data/admin.test.ts (new file), src/pages/Admin/AdminPage.tsx, src/pages/Admin/InviteCodesSection.tsx (new file), src/pages/Admin/CodesList.tsx (new file), src/pages/Admin/CodesList.test.tsx (new file), src/pages/Admin/MasterCodeSection.tsx (new file), src/pages/Admin/RolesSection.tsx (new file), src/pages/Admin/RolesList.tsx (new file), src/pages/Admin/RolesList.test.tsx (new file), src/pages/Admin/roles.ts (new file), src/pages/Admin/roles.test.ts (new file), src/pages/Admin/ui.tsx (new file), src/pages/Admin/format.ts (new file), AI-ATTRIBUTION.md
+- Tool: Claude Code (Claude Opus 5.5)
+- Task: Build the Admin page: generate (1 to 20), list and revoke one-time invite codes, view and change the master code, and toggle DM and Admin roles (own Admin toggle disabled), with data calls in src/data/admin.ts and unit tests for the codes list states and the disabled own-Admin toggle.
+- Review: TODO
